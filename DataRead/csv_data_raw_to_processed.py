@@ -96,4 +96,23 @@ race_final_df.write.mode("overwrite").partitionBy("race_year").parquet("/mnt/dlu
 
 # COMMAND ----------
 
-race_final_df.write.mode("overwrite").partitionBy("race_year").format("delta").save("/mnt/
+laps_time_schema = 'raceID INT, driverID INT, lap INT, position INT, time STRING ,milliseconds INT'
+
+# COMMAND ----------
+
+laps_time_data = spark.read.csv("/mnt/dludemycourse/raw/lap_times/", header=False, schema=laps_time_schema)
+
+# COMMAND ----------
+
+display(laps_time_data)
+
+# COMMAND ----------
+
+from pyspark.sql.functions import current_timestamp
+laps_time_final_data = laps_time_data.withColumnRenamed('raceId','race_id')\
+                                        .withColumnRenamed('driverId','driver_id')\
+                                            .withColumn('ingestion_date',current_timestamp())
+
+# COMMAND ----------
+
+laps_time_final_data.write.mode("overwrite").parquet("/mnt/dludemycourse/processed/laps_time")
