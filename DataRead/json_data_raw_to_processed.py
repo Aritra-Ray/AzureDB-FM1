@@ -1,5 +1,5 @@
 # Databricks notebook source
-constructors_schema = 'constructorId INT, constructorRef STRING,  nationality STRING, url STRING'
+constructors_schema = 'constructorId INT, constructorRef STRING, name STRING, nationality STRING, url STRING'
 
 # COMMAND ----------
 
@@ -105,3 +105,33 @@ pitsstop_schema = 'raceId INT, driverId INT,  stop STRING, lap INT , time STRING
 # COMMAND ----------
 
 pitsstop_data = spark.read.schema(pitsstop_schema).option("multiline", True).json('/mnt/dludemycourse/raw/pit_stops.json')
+
+# COMMAND ----------
+
+pitsstop_final_data = pitsstop_data.withColumnRenamed('raceId','race_id') \
+                        .withColumnRenamed('driverId','driver_id') \
+                        .withColumn('ingestion_date',current_timestamp())
+
+# COMMAND ----------
+
+pitsstop_final_data.write.mode("overwrite").parquet('/mnt/dludemycourse/processed/pit_stops/')
+
+# COMMAND ----------
+
+qualify_schema = 'qualifyId INT, raceId INT, driverId INT, constructorId INT, number INT, position INT, q1 STRING, q2 STRING, q3 STRING'
+
+# COMMAND ----------
+
+qualify_data = spark.read.schema(qualify_schema).option("multiline",True).json('/mnt/dludemycourse/raw/qualifying/')
+
+# COMMAND ----------
+
+qualify_final_data = qualify_data.withColumnRenamed('qualifyingId','qualifying_id')\
+                                    .withColumnRenamed('raceId','race_id')\
+                                    .withColumnRenamed('driverId','driver_id')\
+                                .withColumnRenamed('constructorId','constructor_id')\
+                                    .withColumn('ingestion_date',current_timestamp())
+
+# COMMAND ----------
+
+qualify_final_data.write.mode("overwrite").parquet('/mnt/dludemycourse/processed/qualifying/')
