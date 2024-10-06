@@ -1,4 +1,12 @@
-# AzureDB-FM1
+# AzureDB-F1
+
+This is an implementation of Udemy dabaricks course. We have implemented this course while learing from Ramesh Retnasamy on Udemy. 
+This project is analyzing the f1 race data from 1950. We trying to figure out the top 10 F1 drivers and top 10 teams of all time.
+Below is the architecture that is being loosly followed in this project.
+https://learn.microsoft.com/en-us/azure/architecture/solution-ideas/articles/ingest-etl-stream-with-adb
+
+<img width="377" alt="image" src="https://github.com/user-attachments/assets/9ea614d5-7964-42e6-a1f3-150fc9d7d8ca">
+
 
 ![formula1_ergast_db_data_model](https://github.com/user-attachments/assets/c7354298-734c-48bd-aa3b-bd25708aa57c)
 
