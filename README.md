@@ -24,3 +24,8 @@ Data Model:
 
 This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
 To view a copy of this license, visit: http://creativecommons.org/licenses/by-nc-sa/3.0/
+
+Final Dashboard:
+
+<img width="790" alt="image" src="https://github.com/user-attachments/assets/c8618027-4014-4eb6-b5cc-a11d4ac85be9">
+
