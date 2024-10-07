@@ -1,0 +1,136 @@
+{
+	"name": "F1 race data etl",
+	"properties": {
+		"activities": [
+			{
+				"name": "csv_data_raw_to_processed",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/aritra.ray1@gmail.com/AzureDB-FM1/DataRead/csv_data_raw_to_processed"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks1",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "json_data_raw_to_processed",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "csv_data_raw_to_processed",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/aritra.ray1@gmail.com/AzureDB-FM1/DataRead/json_data_raw_to_processed"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks1",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "processed_to_publish_table_creation",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "json_data_raw_to_processed",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/aritra.ray1@gmail.com/AzureDB-FM1/analysis/processed_to_publish_table_creation"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks1",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "presentation_data_creation",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "processed_to_publish_table_creation",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/aritra.ray1@gmail.com/AzureDB-FM1/analysis/presentation_data_creation"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks1",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "presentation_to_dashboard",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "presentation_data_creation",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/aritra.ray1@gmail.com/AzureDB-FM1/dashboards/presentation_to_dashboard"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks1",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	}
+}

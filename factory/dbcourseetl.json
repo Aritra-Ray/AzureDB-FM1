@@ -1,0 +1,9 @@
+{
+	"name": "dbcourseetl",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "e096208f-2b18-40ec-b4aa-190a89fc0cbe",
+		"tenantId": "fd849f64-95ca-413e-968e-401e53df7cbf"
+	}
+}
